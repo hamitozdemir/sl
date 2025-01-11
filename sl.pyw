@@ -57,18 +57,12 @@ def get_geometry():
 	if platform.system() == 'Windows':
 		return '425x115+94+0'
 	else:
-		screen_width, program_width = (1920, 390)
-		x_position = (screen_width - program_width) / 2
-		return ('%dx115+%d+30' % (program_width, x_position))
+		return ('%dx130+%d+30' % (program_width := 425, (1920 - program_width) / 2))
 
 def log_record(entry):
 	try:
-		path, file = ('Other', 'myLogs.txt')
-		log_path = os.path.join(path, file)
-
-		log = get_time() + '| ' + str(entry).strip() + '\n'
-		with open(log_path, 'a', encoding='utf-8') as f:
-			f.write(log)
+		with open(os.path.join('Other', 'myLogs.txt'), 'a', encoding='utf-8') as f:
+			f.write(get_time() + '| ' + str(entry).strip() + '\n')
 	except IOError as e:
 		print(e)
 

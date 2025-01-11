@@ -76,9 +76,9 @@ def get_geometry():
 	# might as well use else to include OS X
 	else:
 		screen_width = 1920
-		program_width = 390
+		program_width = 425
 		x_position = (screen_width - program_width) / 2
-		return ('%dx115+%d+30' % (program_width, x_position))
+		return ('%dx130+%d+30' % (program_width, x_position))
 
 def log_record(entry):
 	try:
