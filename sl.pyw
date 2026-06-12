@@ -21,7 +21,7 @@ class Gui(tk.Frame):
 		self.set_time()
 
 	def colour_scheme(self):
-		self.bg, self.fg, self.ac1, self.ac2, self.ac3 = ('#282828', '#CAD2C5', '#B3B3B3', '#576F72', '#7D9D9C')
+		self.bg, self.fg, self.ac1, self.ac2, self.ac3 = ('#F2F2F7', '#1C1C1E', '#8E8E93', '#007AFF', '#30B0C7')
 
 	def add_elements(self):
 		self.text_entry = tk.Text(self.row_bot, width=50, height=4, wrap='word', undo=True, insertbackground=self.ac1, selectbackground=self.ac2, inactiveselectbackground=self.ac3)
@@ -30,11 +30,11 @@ class Gui(tk.Frame):
 		self.scrolly = tk.Scrollbar(self.row_bot, orient='vertical', command=self.text_entry.yview)
 		self.text_entry.configure(yscrollcommand=self.scrolly.set)
 
-		self.button_enter = tk.Button(self.row_top, text='Enter', command=self.log_entry, activebackground=self.fg, activeforeground=self.bg, cursor='hand2')
+		#self.button_enter = tk.Button(self.row_top, text='Enter', command=self.log_entry, activebackground=self.fg, activeforeground=self.bg, cursor='hand2')
 
 		self.label_time = tk.Label(self.row_top, text='')
 
-		for el in [self.label_time, self.text_entry, self.button_enter]:
+		for el in [self.label_time, self.text_entry]:
 			el.pack(side='left', pady=2, padx=1)
 			el.configure(bg=self.bg, fg=self.fg, borderwidth=0)
 
@@ -57,12 +57,18 @@ def get_geometry():
 	if platform.system() == 'Windows':
 		return '425x115+94+0'
 	else:
-		return ('%dx130+%d+30' % (program_width := 425, (1920 - program_width) / 2))
+		screen_width, program_width = (1920, 380)
+		x_position = (screen_width - program_width) / 2
+		return ('%dx95+%d+30' % (program_width, x_position))
 
 def log_record(entry):
 	try:
-		with open(os.path.join('Other', 'myLogs.txt'), 'a', encoding='utf-8') as f:
-			f.write(get_time() + '| ' + str(entry).strip() + '\n')
+		path, file = ('Other', 'myLogs.txt')
+		log_path = os.path.join(path, file)
+
+		log = get_time() + '| ' + str(entry).strip() + '\n'
+		with open(log_path, 'a', encoding='utf-8') as f:
+			f.write(log)
 	except IOError as e:
 		print(e)
 
